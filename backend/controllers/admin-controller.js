@@ -1,6 +1,6 @@
 import Admin from "../models/Admin";
 import bcrypt from "bcryptjs";
-// import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 export const addAdmin = async(req , res , next) => {
     const {email , password} = req.body;
@@ -63,10 +63,10 @@ export const adminLogin = async(req , res , next)=>{
         return res.status(400).json({message: "Invalid Credentials"});
     }
 
-    // const token = jwt.sign({id:existingAdmin._id} , process.env.SECRET_KEY ,{
-    //     expiresIn: '7d'
-    // });
+    const token = jwt.sign({id:existingAdmin._id} , process.env.SECRET_KEY ,{
+        expiresIn: '7d'
+    });
 
-    return res.status(200).json({message: "Authentication Complete"})
+    return res.status(200).json({message: "Authentication Complete" , token , id: existingAdmin._id})
 
 }
